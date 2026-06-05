@@ -1,0 +1,228 @@
+/* dashboard.css - Estilos específicos para la pantalla proyectable */
+
+.dashboard-container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  height: 100vh;
+  padding: 1.5rem;
+  gap: 1.5rem;
+}
+
+/* Header */
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard-title {
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--text-secondary);
+  transition: background-color 0.3s;
+}
+
+.dot.conectado {
+  background-color: var(--color-r);
+  box-shadow: 0 0 8px var(--color-r-glow);
+  animation: pulse 2s infinite;
+}
+
+.dot.desconectado {
+  background-color: var(--color-i);
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 var(--color-r-glow); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+/* Main Grid Layout */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  gap: 1.5rem;
+  height: 100%;
+  min-height: 0; /* Para el overflow de la gráfica */
+}
+
+/* Panel Lateral (Controles) */
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.control-group label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+/* Sliders personalizados */
+input[type=range] {
+  -webkit-appearance: none;
+  width: 100%;
+  background: transparent;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+  margin-top: -6px;
+  box-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  cursor: pointer;
+  background: #334155;
+  border-radius: 2px;
+}
+
+/* Contenedor del QR */
+.qr-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-top: auto; /* Empujar hacia abajo */
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.qr-container p {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+#qrCode {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+}
+
+/* Panel Principal (Contadores y Gráfica) */
+.main-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-height: 0;
+}
+
+/* Contadores Grandes */
+.counters-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.counter-card {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.counter-label {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.5rem;
+  z-index: 1;
+}
+
+.counter-value {
+  font-size: 4rem;
+  font-weight: 700;
+  line-height: 1;
+  z-index: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Estilos específicos por estado */
+.counter-card.s { color: var(--color-s); }
+.counter-card.i { color: var(--color-i); }
+.counter-card.r { color: var(--color-r); }
+
+.counter-card.s::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, var(--color-s-glow) 0%, transparent 70%); opacity: 0.1; }
+.counter-card.i::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, var(--color-i-glow) 0%, transparent 70%); opacity: 0.1; }
+.counter-card.r::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at center, var(--color-r-glow) 0%, transparent 70%); opacity: 0.1; }
+
+/* Contenedor de la gráfica */
+.chart-container {
+  flex-grow: 1;
+  padding: 1rem;
+  min-height: 0; /* Necesario para que chart.js respete el alto del contenedor en un flex column */
+  position: relative;
+}
+
+/* Botones principales */
+.btn-primary {
+  background-color: var(--accent-color);
+  color: white;
+  font-size: 1.125rem;
+  padding: 1rem;
+  width: 100%;
+  box-shadow: 0 4px 14px 0 rgba(139, 92, 246, 0.39);
+}
+
+.btn-primary:hover {
+  background-color: #7c3aed;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.5);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.btn-danger {
+  background-color: transparent;
+  color: var(--color-i);
+  border: 1px solid var(--color-i);
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+}
+
+.btn-danger:hover {
+  background-color: rgba(239, 68, 68, 0.1);
+}

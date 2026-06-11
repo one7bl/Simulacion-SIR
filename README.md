@@ -28,7 +28,10 @@ Para ejecutar este proyecto de forma local, sigue estos pasos simples:
    ```
 
 2. **Iniciar un servidor local:**
-   Como es una aplicación web puramente frontend, no requiere compilación. Puedes servirla utilizando cualquier servidor local rápido o una extensión de Visual Studio Code como Live Server o Live Preview. Por ejemplo:
+   Como es una aplicación web puramente frontend, no requiere compilación. Puedes servirla utilizando cualquier servidor local rápido o una extensión de Visual Studio Code como Live Server o Live Preview.
+
+   Ejemplo con servidor local:
+
    * Usando Python:
      ```bash
      python -m http.server 8000

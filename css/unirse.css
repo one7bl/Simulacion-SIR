@@ -88,17 +88,17 @@
   margin-bottom: 0.5rem;
 }
 
-.radio-option input[type="radio"]:checked + .radio-label {
+.radio-option input[type="radio"]:checked+.radio-label {
   transform: translateY(-2px);
 }
 
-.radio-option input[value="S"]:checked + .radio-label {
+.radio-option input[value="S"]:checked+.radio-label {
   border-color: var(--color-s);
   background: rgba(59, 130, 246, 0.1);
   box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
 }
 
-.radio-option input[value="I"]:checked + .radio-label {
+.radio-option input[value="I"]:checked+.radio-label {
   border-color: var(--color-i);
   background: rgba(239, 68, 68, 0.1);
   box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
@@ -135,7 +135,7 @@
   padding: 1rem 2rem;
   border-radius: 16px;
   background: var(--panel-bg);
-  border: 2px solid rgba(255,255,255,0.1);
+  border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .spinner {
@@ -148,7 +148,9 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Transiciones de fondo según el estado actual */
@@ -157,15 +159,16 @@ body {
 }
 
 body.estado-S {
-  background-color: var(--bg-color); /* Fondo normal */
+  background-color: var(--bg-color);
+  /* Fondo normal */
 }
 
 body.estado-I {
   /* Fondo rojizo suave indicando infección */
-  background-color: #450a0a; 
+  background-color: #450a0a;
 }
 
 body.estado-R {
   /* Fondo verdoso suave indicando recuperación */
-  background-color: #052e16; 
+  background-color: #052e16;
 }

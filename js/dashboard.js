@@ -28,12 +28,12 @@ function actualizarVista() {
     else if (est.estado === 'I') i++;
     else if (est.estado === 'R') r++;
   }
-  
+
   actualizarContadoresUI(s, i, r);
-  
+
   // Agregar punto a la gráfica solo si la población > 0 o si es el primer paso
   if (estudiantesCache.length > 0 && pasoActual === 0) {
-      agregarPuntoGrafica(pasoActual, s, i, r);
+    agregarPuntoGrafica(pasoActual, s, i, r);
   }
 }
 
@@ -49,7 +49,7 @@ function suscribirRealtime() {
 
 function manejarCambioRealtime(payload) {
   const { eventType, new: newRow, old: oldRow } = payload;
-  
+
   if (eventType === 'INSERT') {
     estudiantesCache.push(newRow);
   } else if (eventType === 'UPDATE') {
@@ -58,7 +58,7 @@ function manejarCambioRealtime(payload) {
   } else if (eventType === 'DELETE') {
     estudiantesCache = estudiantesCache.filter(e => e.id !== oldRow.id);
   }
-  
+
   actualizarVista();
 }
 
@@ -79,13 +79,13 @@ async function ejecutarInteraccion() {
   try {
     // Para simplificar y mejorar eficiencia de las llamadas, agrupamos actualizaciones
     // En supabase podemos usar .in() si usamos el JS client correctamente, o promesas en paralelo
-    
+
     const promesas = [];
 
     if (infectarIDs.length > 0) {
       promesas.push(supabase.from('estudiantes').update({ estado: 'I' }).in('id', infectarIDs));
     }
-    
+
     if (recuperarIDs.length > 0) {
       promesas.push(supabase.from('estudiantes').update({ estado: 'R' }).in('id', recuperarIDs));
     }
@@ -96,13 +96,13 @@ async function ejecutarInteraccion() {
     // Sin embargo, para la gráfica, registramos el estado una vez que terminen las actualizaciones.
     // Damos un pequeño margen para que el Realtime procese (o calculamos nosotros directamente para la gráfica)
     setTimeout(() => {
-        let s = 0, i = 0, r = 0;
-        for (const est of estudiantesCache) {
-            if (est.estado === 'S') s++;
-            else if (est.estado === 'I') i++;
-            else if (est.estado === 'R') r++;
-        }
-        agregarPuntoGrafica(pasoActual, s, i, r);
+      let s = 0, i = 0, r = 0;
+      for (const est of estudiantesCache) {
+        if (est.estado === 'S') s++;
+        else if (est.estado === 'I') i++;
+        else if (est.estado === 'R') r++;
+      }
+      agregarPuntoGrafica(pasoActual, s, i, r);
     }, 500);
 
   } catch (err) {
@@ -110,19 +110,19 @@ async function ejecutarInteraccion() {
     alert("Hubo un error procesando el paso SIR.");
   } finally {
     btnInteractuar.disabled = false;
-    btnInteractuar.textContent = "EJECUTAR INTERACCIÓN (Paso +1)";
+    btnInteractuar.textContent = "Simular Interacción";
   }
 }
 
 async function reiniciarSesion() {
-  if(!confirm("¿Seguro que deseas reiniciar la sesión? Se borrarán todos los estudiantes actuales.")) return;
-  
+  if (!confirm("¿Seguro que deseas reiniciar la sesión? Se borrarán todos los estudiantes actuales.")) return;
+
   try {
     // Al no tener WHERE sin filtro, supabase requiere especificar algo que abarque a todos para un DELETE masivo. 
     // Como las políticas pueden restringirlo, seleccionamos los IDs o usamos != 0.
     const { error } = await supabase.from('estudiantes').delete().neq('id', '00000000-0000-0000-0000-000000000000');
     if (error) throw error;
-    
+
     pasoActual = 0;
     reiniciarGrafica();
   } catch (err) {
@@ -132,19 +132,19 @@ async function reiniciarSesion() {
 
 function generarQR() {
   const contenedorQR = document.getElementById('qrCode');
-  if(!contenedorQR) return;
-  
+  if (!contenedorQR) return;
+
   // Como se solicitó, asumimos que el usuario lo hará manual, pero dejamos un código genérico apuntando al host actual.
-  const baseUrl = window.location.href.replace('index.html', '').replace(/\/$/, "");
-  const urlUnirse = `${baseUrl}/unirse.html`;
+  const baseUrl = 'https://one7bl.github.io/Simulacion-SIR';
+  const urlUnirse = `${baseUrl}/unirse`;
 
   new QRCode(contenedorQR, {
-      text: urlUnirse,
-      width: 150,
-      height: 150,
-      colorDark : "#ffffff",
-      colorLight : "#1f2937",
-      correctLevel : QRCode.CorrectLevel.L
+    text: urlUnirse,
+    width: 150,
+    height: 150,
+    colorDark: "#ffffff",
+    colorLight: "#1f2937",
+    correctLevel: QRCode.CorrectLevel.L
   });
 }
 
@@ -152,12 +152,12 @@ function generarQR() {
 window.addEventListener('DOMContentLoaded', () => {
   inicializarSliders();
   inicializarGrafica('sirChartCanvas');
-  
+
   btnInteractuar.addEventListener('click', ejecutarInteraccion);
-  if(btnReiniciar) {
+  if (btnReiniciar) {
     btnReiniciar.addEventListener('click', reiniciarSesion);
   }
-  
+
   cargarEstudiantesIniciales();
   suscribirRealtime();
   generarQR();

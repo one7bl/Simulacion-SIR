@@ -28,7 +28,7 @@ Para ejecutar este proyecto de forma local, sigue estos pasos simples:
    ```
 
 2. **Iniciar un servidor local:**
-   Como es una aplicación web puramente frontend, no requiere compilación. Puedes servirla utilizando cualquier servidor local rápido. Por ejemplo:
+   Como es una aplicación web puramente frontend, no requiere compilación. Puedes servirla utilizando cualquier servidor local rápido o una extensión de Visual Studio Code como Live Server o Live Preview. Por ejemplo:
    * Usando Python:
      ```bash
      python -m http.server 8000
@@ -56,13 +56,11 @@ Para ejecutar este proyecto de forma local, sigue estos pasos simples:
    * El docente presiona el botón **Simular Interacción** para calcular el siguiente ciclo de contagios y recuperaciones.
    * Los estudiantes infectados o recuperados verán su estado cambiar automáticamente en sus dispositivos y la gráfica del dashboard actualizará su curva al instante.
 
-# Capturas de Pantalla
-
-*Marcadores de posición para capturas de pantalla de la interfaz:*
+# Interfaz de la app
 
 | Dashboard del Docente | Vista del Estudiante |
 | :---: | :---: |
-| ![Dashboard Docente](https://via.placeholder.com/600x400?text=Dashboard+Docente) | ![Vista del Estudiante](https://via.placeholder.com/300x500?text=Vista+del+Estudiante) |
+| ![Dashboard Docente](https://one7bl.github.io/Simulacion-SIR/) | ![Vista del Estudiante](https://one7bl.github.io/Simulacion-SIR/) |
 
 # Estado del Proyecto
 
